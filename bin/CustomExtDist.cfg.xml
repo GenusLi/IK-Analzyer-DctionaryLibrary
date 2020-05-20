@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">  
+<properties>
+	<!-- 词典组件名称 -->
+	<comment>自定义县级地域分词扩展配置</comment>
+	<!--用户可以在这里配置自己的县级地域扩展字典 -->
+	<entry key="ext_dict">dist.dic</entry> 
+	
+	<!--用户可以在这里配置量词字典，已默认为IK内置量词词典 -->
+	<entry key="ext_quantifier">org/wltea/analyzer/dic/quantifier.dic</entry>
+	
+	<!--用户可以在这里配置扩展停止词字典，取值为IK默认停止词典路径-->
+	<entry key="ext_stopwords">stopword.dic</entry> 
+	
+	<!--用户可以在这里配置智能分词（true粗粒度,false细粒度）-->
+	<entry key="use_smart">true</entry> 
+	
+</properties>
