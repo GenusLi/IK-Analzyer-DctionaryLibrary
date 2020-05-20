@@ -4,7 +4,7 @@
 2. 根据项目需求，对IK分词官方版本进行修改，可以在不同业务场景下使用不同的词典进行分词。已确保得到的terms中的第一个元素，一定为符合本次业务场景的词汇。
 3. IK-Analzyer-DictionaryLibrary基于IKAnalyzer2017_6_6_0版本进行修改，需要依赖lucene-analyzers-common-6.6.0、lucene-core-6.6.0、lucene-queryparser-6.6.0
 
-! [text ] ( https://github.com/GenusLi/IK-Analzyer-DictionaryLibrary/blob/master/%E7%AE%80%E4%BB%8B.png)
+![avatar](https://github.com/GenusLi/IK-Analzyer-DictionaryLibrary/blob/master/%E7%AE%80%E4%BB%8B.png)
 
 ### 修改内容
 1. 添加自定义词库功能，可以创建配置类对象来使用不同的词典
