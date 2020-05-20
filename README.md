@@ -100,7 +100,7 @@ public class ProvExtDicConfig implements Configuration {
 	}
 
 	/**
-	 * 获取扩展词典
+	 * 获取扩展词典，扩展词典可有可无，在自定义词典中使用扩展词典无意义
 	 */
 	@Override
 	public List<String> getExtDictionarys() {
