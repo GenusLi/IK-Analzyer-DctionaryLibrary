@@ -151,3 +151,80 @@ public class ProvExtDicConfig implements Configuration {
 河北省
 山西省
 ```
+### 使用自定义词典进行分词
+```java
+public class IKAnalzyerDemo {
+
+    public static void main(String[] args) {
+    	String str="内蒙古前郭尔罗斯蒙古族自治县宝甸乡韭菜坨子村前二道梁子屯";
+        //构建IK分词器，使用smart分词模式
+    	
+    	//省级词典分词
+    	Configuration prov_config=ProvExtDicConfig.getInstance();
+//        Analyzer prov_analyzer = new IKAnalyzerExt(prov_config,true,false);
+        String prov=analysis(str,prov_config);
+        if(prov.length()>1) {
+        	System.out.println(prov);
+        	str=str.replaceFirst(prov, "");
+        }
+    	
+        
+        //市级词典分词
+    	Configuration city_config=CityExtDicConfig.getInstance();
+    	String city=analysis(str,city_config);
+    	if(city.length()>1) {
+    		System.out.println(city);
+    		str=str.replaceFirst(city, "");
+    	}
+    	
+        //县级词典分词
+    	Configuration dist_config=DistExtDicConfig.getInstance();
+    	System.out.println(analysis(str,dist_config));
+    	str=str.replaceFirst(analysis(str,dist_config), "");
+    	System.out.println(str);
+        
+    }
+    public static String analysis(String str,Configuration config) {
+    	//注意这里使用的是IKAnalyzerExt类，是对IKAnalyzer进行的扩展修改。如果使用IK官方词典库，请构造IKAnalyzer。
+    	Analyzer analyzer = new IKAnalyzerExt(config,true,false);
+    	//获取Lucene的TokenStream对象
+        TokenStream ts = null;
+        String result="";
+        try {
+            ts = analyzer.tokenStream("", new StringReader(str));
+            //获取词元位置属性
+            OffsetAttribute offset = ts.addAttribute(OffsetAttribute.class);
+            //获取词元文本属性
+            CharTermAttribute term = ts.addAttribute(CharTermAttribute.class);
+            //获取词元文本属性
+            TypeAttribute type = ts.addAttribute(TypeAttribute.class);
+            PositionIncrementAttribute pos = ts.addAttribute(PositionIncrementAttribute.class);
+
+            //重置TokenStream（重置StringReader）
+            ts.reset();
+            //迭代获取分词结果
+            while (ts.incrementToken()) {
+            	if(result.equals("")) {
+            		result=term.toString();
+            		break;
+            	}
+            }
+            //关闭TokenStream（关闭StringReader）
+            ts.end();   // Perform end-of-stream operations, e.g. set the final offset.
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //释放TokenStream的所有资源
+            if (ts != null) {
+                try {
+                    ts.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+    
+}
+```
